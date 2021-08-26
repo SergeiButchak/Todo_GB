@@ -4,6 +4,7 @@ import React from 'react';
 import UserList from "./components/Users";
 import axios from "axios";
 import Footer from "./components/Footer";
+import Main from "./components/Main";
 
 class App extends React.Component {
     constructor(props) {
@@ -59,6 +60,7 @@ class App extends React.Component {
         return (
             // <div>Main App</div>
             <div>
+                <Main />
                 <UserList users={this.state.users}/>
                 <Footer />
             </div>
