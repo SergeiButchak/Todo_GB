@@ -11,18 +11,20 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         count = options['count']
         User.objects.all().delete()
-        user = User.objects.create(username='django',
-                                   first_name='django',
-                                   last_name='geekbrains',
-                                   email='django.email.com',
-                                   password='geekbrains')
+        user = User.objects.create_superuser(username='django',
+                                             email='django.email.com',
+                                             password='geekbrains',
+                                             first_name='django',
+                                             last_name='geekbrains'
+                                             )
         print(f'Superuser {user} created')
 
         for i in range(count):
-            user = User.objects.create(username=f'Test_{i}',
-                                       first_name=f'Test_{i}',
-                                       last_name=f'User_{i}',
-                                       email=f'Test_User_{i}.email.com',
-                                       password=f'Test_User_{i}')
+            user = User.objects.create_user(username=f'Test_{i}',
+                                            email=f'Test_User_{i}.email.com',
+                                            password=f'Test_User_{i}',
+                                            first_name=f'Test_{i}',
+                                            last_name=f'User_{i}'
+                                            )
             print(f'User {user} created')
         print('done')
