@@ -10,9 +10,9 @@ class Project(models.Model):
 
 
 class Todo(models.Model):
-    project = models.ForeignKey(Project, related_name='project',on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, related_name='project', on_delete=models.CASCADE)
     description = models.TextField(max_length=4000, blank=False, null=False)
-    navi_user = models.ForeignKey(User, related_name='reporter',on_delete=models.CASCADE)
+    navi_user = models.ForeignKey(User, related_name='reporter', on_delete=models.CASCADE)
     navi_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True, blank=False, null=False)
