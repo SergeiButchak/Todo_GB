@@ -7,6 +7,12 @@ import axios from "axios";
 import Footer from "./components/Footer";
 import Main from "./components/Main";
 import TodoList from "./components/Todo";
+import {HashRouter, Route} from "react-router-dom";
+
+function getUrl(endPoint) {
+    const BASE_API_URL = "http://127.0.0.1:8000/api/";
+    return (BASE_API_URL + endPoint + '/')
+}
 
 class App extends React.Component {
     constructor(props) {
@@ -19,33 +25,8 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        // const users = [
-        //     {
-        //         "username": "django",
-        //         "first_name": "dsfa",
-        //         "last_name": "dfasdlf",
-        //         "email": "fjsdlfjls"
-        //     },
-        //     {
-        //         "username": "sergey",
-        //         "first_name": "dsfa",
-        //         "last_name": "dfasdlf",
-        //         "email": "fjsdlfjls"
-        //     },
-        //     {
-        //         "username": "test1",
-        //         "first_name": "dsfa",
-        //         "last_name": "dfasdlf",
-        //         "email": "fjsdlfjls"
-        //     }
-        // ]
-        // this.setState(
-        //     this.state = {
-        //         "users": users
-        //     }
-        // )
 
-        axios.get('http://127.0.0.1:8000/api/users')
+        axios.get(getUrl('users'))
             .then(
                 response => {
                     const users = response.data
@@ -58,7 +39,7 @@ class App extends React.Component {
             )
             .catch(error => console.log(error))
 
-        axios.get('http://127.0.0.1:8000/api/projects')
+        axios.get(getUrl('projects'))
             .then(
                 response => {
                     const projects = response.data
@@ -71,7 +52,7 @@ class App extends React.Component {
             )
             .catch(error => console.log(error))
 
-        axios.get('http://127.0.0.1:8000/api/todo')
+        axios.get(getUrl('todo'))
             .then(
                 response => {
                     const todos = response.data
