@@ -70,11 +70,14 @@ class App extends React.Component {
     render() {
         return (
             // <div>Main App</div>
-            <div>
+            <div className="App">
                 <Main />
-                <UserList users={this.state.users}/>
-                <ProjectList projects={this.state.projects}/>
-                <TodoList todos={this.state.todos} />
+                <HashRouter>
+                    <Route exact path='/' component={() => <h1>Welcome to TODO</h1>} />
+                    <Route exact path='/users' component={() => <UserList users={this.state.users}/>} />
+                    <Route exact path='/projects' component={() =>  <ProjectList projects={this.state.projects}/>} />
+                    <Route exact path='/todo' component={() => <TodoList todos={this.state.todos} />} />
+                </HashRouter>
                 <Footer />
             </div>
         )
