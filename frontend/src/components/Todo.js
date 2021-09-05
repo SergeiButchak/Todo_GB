@@ -5,32 +5,35 @@ import Moment from "moment";
 const TodoItem = ({todo}) => {
     Moment.locale("en");
     return (
-        <tr>
-            <td>
-                {todo.description}
-            </td>
-            <td>
-                {Moment(todo.naviDate).format("YYYY-MM-DD HH:mm")}
-            </td>
-        </tr>
+        <tbody>
+            <tr>
+                <td>
+                    {todo.description}
+                </td>
+                <td>
+                    {Moment(todo.naviDate).format("YYYY-MM-DD HH:mm")}
+                </td>
+            </tr>
+        </tbody>
     )
 }
 
 const TodoList = ({todos}) => {
 
     return (
-        <tbody>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Created
-                </th>
-            </tr>
-            {/*{projects.name}*/}
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Created
+                    </th>
+                </tr>
+            </thead>
             {todos.map((todo) => <TodoItem todo={todo} />)}
-        </tbody>
+        </table>
 
     )
 }

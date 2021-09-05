@@ -2,42 +2,46 @@ import React from "react";
 
 const User = ({user}) => {
     return (
-        <tr>
-            <td>
-                {user.username}
-            </td>
-            <td>
-                {user.firstName}
-            </td>
-            <td>
-                {user.lastName}
-            </td>
-            <td>
-                {user.email}
-            </td>
-        </tr>
+        <tbody>
+            <tr>
+                <td>
+                    {user.username}
+                </td>
+                <td>
+                    {user.firstName}
+                </td>
+                <td>
+                    {user.lastName}
+                </td>
+                <td>
+                    {user.email}
+                </td>
+            </tr>
+        </tbody>
     )
 }
 
 const UserList = ({users}) => {
     return (
-        <tbody>
-            <tr>
-                <th>
-                    Username
-                </th>
-                <th>
-                    First name
-                </th>
-                <th>
-                    Last name
-                </th>
-                <th>
-                    Email
-                </th>
-            </tr>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Username
+                    </th>
+                    <th>
+                        First name
+                    </th>
+                    <th>
+                        Last name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                </tr>
+            </thead>
             {users.map((user) => <User user={user} />)}
-        </tbody>
+        </table>
 
     )
 }
