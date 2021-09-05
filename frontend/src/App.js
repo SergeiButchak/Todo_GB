@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Main from "./components/Main";
 import TodoList from "./components/Todo";
 import {BrowserRouter, Route} from "react-router-dom";
+import ProjectDetail from "./components/ProjectDetail";
 
 function getUrl(endPoint) {
     const BASE_API_URL = "http://127.0.0.1:8000/api/";
@@ -76,6 +77,7 @@ class App extends React.Component {
                     <Route exact path='/' component={() => <h1>Welcome to TODO</h1>} />
                     <Route exact path='/users' component={() => <UserList users={this.state.users}/>} />
                     <Route exact path='/projects' component={() =>  <ProjectList projects={this.state.projects}/>} />
+                    <Route exact path='/projects/:id' component={() =>  <ProjectDetail projects={this.state.projects}/>} />
                     <Route exact path='/todo' component={() => <TodoList todos={this.state.todos} />} />
                 </BrowserRouter>
                 <Footer />
