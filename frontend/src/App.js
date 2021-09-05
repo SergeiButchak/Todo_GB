@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import UserList from "./components/Users";
+import ProjectList from "./components/Projects";
 import axios from "axios";
 import Footer from "./components/Footer";
 import Main from "./components/Main";
@@ -10,7 +11,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "users": []
+            "users": [],
+            "projects": []
         };
     }
 
@@ -47,7 +49,20 @@ class App extends React.Component {
                     const users = response.data
                     this.setState(
                         {
-                            "users": users
+                            "users": users.results
+                        }
+                    )
+                }
+            )
+            .catch(error => console.log(error))
+
+        axios.get('http://127.0.0.1:8000/api/projects')
+            .then(
+                response => {
+                    const projects = response.data
+                    this.setState(
+                        {
+                            "projects": projects.results
                         }
                     )
                 }
@@ -62,6 +77,7 @@ class App extends React.Component {
             <div>
                 <Main />
                 <UserList users={this.state.users}/>
+                <ProjectList projects={this.state.projects}/>
                 <Footer />
             </div>
         )
