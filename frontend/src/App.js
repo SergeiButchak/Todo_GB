@@ -7,7 +7,7 @@ import axios from "axios";
 import Footer from "./components/Footer";
 import Main from "./components/Main";
 import TodoList from "./components/Todo";
-import {HashRouter, Route} from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
 
 function getUrl(endPoint) {
     const BASE_API_URL = "http://127.0.0.1:8000/api/";
@@ -71,13 +71,13 @@ class App extends React.Component {
         return (
             // <div>Main App</div>
             <div className="App">
+                <BrowserRouter>
                 <Main />
-                <HashRouter>
                     <Route exact path='/' component={() => <h1>Welcome to TODO</h1>} />
                     <Route exact path='/users' component={() => <UserList users={this.state.users}/>} />
                     <Route exact path='/projects' component={() =>  <ProjectList projects={this.state.projects}/>} />
                     <Route exact path='/todo' component={() => <TodoList todos={this.state.todos} />} />
-                </HashRouter>
+                </BrowserRouter>
                 <Footer />
             </div>
         )

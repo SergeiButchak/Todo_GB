@@ -1,12 +1,11 @@
 import React from "react";
-import {HashRouter, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 
 const Main = () => {
     return (
 
         <div className="main">
-            <HashRouter>
                 <nav>
                     <ul>
                         <li>
@@ -23,7 +22,6 @@ const Main = () => {
                         </li>
                     </ul>
                 </nav>
-            </HashRouter>
             <hr/>
         </div>
     )
