@@ -23,7 +23,7 @@ const User = ({user}) => {
 
 const UserList = ({users}) => {
     return (
-        <table>
+        <table border={"1px"} cellPadding={"5px"} cellSpacing={"0"}>
             <thead>
                 <tr>
                     <th>

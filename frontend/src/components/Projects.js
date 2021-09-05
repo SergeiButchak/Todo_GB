@@ -9,7 +9,7 @@ const ProjectItem = ({project}) => {
                     <Link to={`/projects/${project.id}`}>{project.name}</Link>
                 </td>
                 <td>
-                    <a href={`${project.repLink}`}>{project.repLink}</a>
+                    {project.repLink}
                 </td>
             </tr>
         </tbody>
@@ -18,7 +18,7 @@ const ProjectItem = ({project}) => {
 
 const ProjectList = ({projects}) => {
     return (
-        <table>
+        <table border={"1px"} cellPadding={"5px"} cellSpacing={"0"}>
             <thead>
                 <tr>
                     <th>

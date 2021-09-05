@@ -21,7 +21,7 @@ const TodoItem = ({todo}) => {
 const TodoList = ({todos}) => {
 
     return (
-        <table>
+        <table border={"1px"} cellPadding={"5px"} cellSpacing={"0"}>
             <thead>
                 <tr>
                     <th>
