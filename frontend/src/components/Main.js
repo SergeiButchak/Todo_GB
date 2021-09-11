@@ -2,12 +2,11 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 
-const Main = () => {
+const Main = (param) => {
     return (
-
         <div className="main">
                 <nav>
-                    <ul>
+                    <ul className={"hr"}>
                         <li>
                             <Link to="/">Main</Link>
                         </li>
@@ -20,6 +19,14 @@ const Main = () => {
                         <li>
                             <Link to="/todo">Todos</Link>
                         </li>
+                        <li>
+                            {param.instance.is_authenticated() ? <button onClick={()=>param.instance.logout()}>Logout</button> : <Link to='/login'>Login</Link>}
+
+                        </li>
+                        <li>
+                            {param.instance.is_authenticated() ? param.instance.state.login : ''}
+                        </li>
+
                     </ul>
                 </nav>
             <hr/>
