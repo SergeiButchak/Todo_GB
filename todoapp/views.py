@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.permissions import IsAuthenticated
 from django_filters import rest_framework as filters
 from todoapp.models import Project, Todo
 from todoapp.serializers import ProjectSerializer, TodoSerializer
@@ -34,6 +35,7 @@ class ProjectViewSet(ModelViewSet):
     serializer_class = ProjectSerializer
     pagination_class = ProjectLimitOffsetPagination
     filterset_class = ProjectFilter
+    permission_classes = [IsAuthenticated]
 
 
 class TodoViewSet(ModelViewSet):
@@ -41,6 +43,7 @@ class TodoViewSet(ModelViewSet):
     serializer_class = TodoSerializer
     pagination_class = TodoLimitOffsetPagination
     filterset_class = TodoFilter
+    permission_classes = [IsAuthenticated]
 
     def perform_destroy(self, instance):
         instance.is_active = False
