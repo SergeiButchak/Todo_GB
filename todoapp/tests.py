@@ -54,4 +54,28 @@ class TestProjectViewSet(TestCase):
         response = cleint.get(f'/api/projects/{project.id}/')
         # print(response.content)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class TestTodoViewSet(APITestCase):
+
+    def test_add_and_update_todo(self):
+        admin = get_user_model().objects.create_superuser(username='admin', email='admin@my.com', password='admin12345')
+        project = Project.objects.create(name='todo', rep_link='https://github.com/SergeiButchak/Todo_GB')
+        self.client.login(username='admin', password='admin12345')
+        response = self.client.post('/api/todo/', {'description': 'test',
+                                                   'project': project.id,
+                                                   'naviUser': admin.id,
+                                                   'isActive': True})
+        todo_id = json.loads(response.content.decode())['id']
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response = self.client.put(f'/api/todo/{todo_id}/', {'description': 'test done',
+                                                             'project': project.id,
+                                                             'naviUser': admin.id,
+                                                             'isActive': False})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        todo = Todo.objects.get(id=todo_id)
+        self.assertEqual('test done', todo.description)
+        self.assertEqual(False, todo.is_active)
+
+
 # Create your tests here.
