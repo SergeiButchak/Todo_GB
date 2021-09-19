@@ -22,19 +22,25 @@ class TestProjectViewSet(TestCase):
 
     def test_get_project_list_no_auth(self):
         # 1 APIRequestFactory
+        project = mixer.blend(Project)
         factory = APIRequestFactory()
         request = factory.get('/api/projects/')
         view = ProjectViewSet.as_view({'get': 'list'})
         response = view(request)
+        # print(response.render().content)
+
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_project_list_auth(self):
         # 1 APIRequestFactory
+        project = mixer.blend(Project)
         factory = APIRequestFactory()
         request = factory.get('/api/projects/')
         force_authenticate(request, self.user)
         view = ProjectViewSet.as_view({'get': 'list'})
         response = view(request)
+        # print(response.render().content)
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_project_detail(self):
