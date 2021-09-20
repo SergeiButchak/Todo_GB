@@ -66,8 +66,8 @@ class TestTodoViewSet(APITestCase):
                                                    'project': project.id,
                                                    'naviUser': admin.id,
                                                    'isActive': True})
-        todo_id = json.loads(response.content.decode())['id']
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        todo_id = json.loads(response.content.decode())['id']
         response = self.client.put(f'/api/todo/{todo_id}/', {'description': 'test done',
                                                              'project': project.id,
                                                              'naviUser': admin.id,
