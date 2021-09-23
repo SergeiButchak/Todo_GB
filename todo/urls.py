@@ -31,8 +31,8 @@ router.register('todo', TodoViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path('api-token-auth/', views.obtain_auth_token),
+    path('api/<version>/', include(router.urls)),
+    path('api/token-auth/', views.obtain_auth_token),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
