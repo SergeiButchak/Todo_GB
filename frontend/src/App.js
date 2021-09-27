@@ -82,6 +82,7 @@ class App extends React.Component {
 
     load_data() {
         const headers = this.get_headers()
+        const get_todo_params = new URLSearchParams([['is_active', 'true']]);
         axios.get(getUrl('users'), {headers})
             .then(
                 response => {
@@ -108,7 +109,7 @@ class App extends React.Component {
             )
             .catch(error => console.log(error))
 
-        axios.get(getUrl('todo'), {headers})
+        axios.get(getUrl('todo'), {params:get_todo_params, headers})
             .then(
                 response => {
                     const todos = response.data
@@ -122,6 +123,15 @@ class App extends React.Component {
             .catch(error => console.log(error))
 
     }
+
+    deleteTodo(id) {
+    const headers = this.get_headers()
+    axios.delete(getUrl(`todo/${id}`),{headers})
+        .then(response => {
+          this.setState({todos: this.state.todos.filter((item)=>item.id !== id)})
+        }).catch(error => console.log(error))
+    }
+
 
     componentDidMount() {
         this.get_token_from_storage()
@@ -141,7 +151,8 @@ class App extends React.Component {
                         <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects}/>}/>
                         <Route exact path='/projects/:id'
                                component={() => <ProjectDetail projects={this.state.projects}/>}/>
-                        <Route exact path='/todo' component={() => <TodoList todos={this.state.todos}/>}/>
+                        <Route exact path='/todo' component={() => <TodoList
+                            todos={this.state.todos} deleteTodo={(id)=>this.deleteTodo(id)}/>}/>
                         <Route exact path='/login' component={() => <LoginForm
                             get_token={(username, password) => this.get_token(username, password)}/>}/>
                         <Route component={NotFound404}/>

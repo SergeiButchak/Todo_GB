@@ -24,6 +24,7 @@ class ProjectFilter(filters.FilterSet):
 
 class TodoFilter(filters.FilterSet):
     navi_date = filters.DateFromToRangeFilter()
+    is_active = filters.BooleanFilter()
 
     class Meta:
         model = Todo
