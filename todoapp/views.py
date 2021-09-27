@@ -48,7 +48,7 @@ class TodoViewSet(ModelViewSet):
     serializer_class = TodoSerializer
     pagination_class = TodoLimitOffsetPagination
     filterset_class = TodoFilter
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def perform_destroy(self, instance):
         instance.is_active = False
