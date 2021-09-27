@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'drf_yasg',
+    'graphene_django',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
@@ -174,3 +175,8 @@ REST_FRAMEWORK = {
 
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
 }
+
+GRAPHENE = {
+    "SCHEMA": "todo.schema.schema"
+}
+
