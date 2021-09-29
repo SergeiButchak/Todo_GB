@@ -124,6 +124,14 @@ class App extends React.Component {
 
     }
 
+    deleteProject(id) {
+        const headers = this.get_headers()
+        axios.delete(getUrl(`projects/${id}`), {headers})
+            .then(response => {
+                this.setState({projects: this.state.projects.filter((item) => item.id !== id)})
+            }).catch(error => console.log(error))
+    }
+
     deleteTodo(id) {
     const headers = this.get_headers()
     axios.delete(getUrl(`todo/${id}`),{headers})
@@ -148,7 +156,8 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path='/' component={() => <h1>Welcome to TODO</h1>}/>
                         <Route exact path='/users' component={() => <UserList users={this.state.users}/>}/>
-                        <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects}/>}/>
+                        <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects}
+                        deleteProject={(id)=>this.deleteProject(id)}/>}/>
                         <Route exact path='/projects/:id'
                                component={() => <ProjectDetail projects={this.state.projects}/>}/>
                         <Route exact path='/todo' component={() => <TodoList
