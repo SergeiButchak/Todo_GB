@@ -12,6 +12,7 @@ import ProjectDetail from "./components/ProjectDetail";
 import LoginForm from "./components/Auth";
 import Cookies from "universal-cookie"
 import ProjectForm from "./components/ProjectForm";
+import TodoForm from "./components/TodoForm";
 
 const NotFound404 = ({location}) => {
     return (
@@ -81,6 +82,10 @@ class App extends React.Component {
         return headers
     }
 
+    getCurrUser() {
+        return this.state.users.filter((item) => item.username === this.state.login)
+    }
+
     load_data() {
         const headers = this.get_headers()
         const get_todo_params = new URLSearchParams([['is_active', 'true']]);
@@ -142,17 +147,28 @@ class App extends React.Component {
     }
 
     createProject(name, repLink, workers) {
-    const headers = this.get_headers()
-    const data = {name: name, repLink: repLink, workers: workers}
-    axios.post(getUrl(`projects`), data, {headers})
-        .then(response => {
-          let new_project = response.data
-          const project = this.state.projects.filter((item) => item.id === new_project.id)[0]
-          new_project.id = project
-          this.setState({projects: [...this.state.projects, new_project]})
-        }).catch(error => console.log(error))
-  }
+        const headers = this.get_headers()
+        const data = {name: name, repLink: repLink, workers: workers}
+        axios.post(getUrl(`projects`), data, {headers})
+            .then(response => {
+                let new_project = response.data
+                const project = this.state.projects.filter((item) => item.id === new_project.id)[0]
+                new_project.id = project
+                this.setState({projects: [...this.state.projects, new_project]})
+            }).catch(error => console.log(error))
+    }
 
+    createTodo(description, naviUser, project) {
+        const headers = this.get_headers()
+        const data = {description: description, naviUser: naviUser, project: project}
+        axios.post(getUrl(`todo`), data, {headers})
+            .then(response => {
+                let new_todo = response.data
+                const todo = this.state.todos.filter((item) => item.id === new_todo.id)[0]
+                new_todo.id = todo
+                this.setState({todos: [...this.state.todos, new_todo]})
+            }).catch(error => console.log(error))
+    }
 
 
     componentDidMount() {
@@ -175,6 +191,11 @@ class App extends React.Component {
                         <Route exact path='/projects/create' component={() => <ProjectForm
                             createProject={(name, repLink, workers) => this.createProject(name, repLink, workers)}
                             users={this.state.users}/>}/>
+                        <Route exact path='/todo/create' component={() => <TodoForm
+                            createTodo={(description, naviUser, project) => this.createTodo(description, naviUser, project)}
+                            projects={this.state.projects}
+                            currUser={this.getCurrUser()}/>}/>
+
                         <Route exact path='/projects/:id'
                                component={() => <ProjectDetail projects={this.state.projects}/>}/>
                         <Route exact path='/todo' component={() => <TodoList
