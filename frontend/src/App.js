@@ -11,6 +11,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import ProjectDetail from "./components/ProjectDetail";
 import LoginForm from "./components/Auth";
 import Cookies from "universal-cookie"
+import ProjectForm from "./components/ProjectForm";
 
 const NotFound404 = ({location}) => {
     return (
@@ -54,7 +55,7 @@ class App extends React.Component {
         const cookies = new Cookies()
         cookies.set("token", token)
         cookies.set("login", login)
-        this.setState({"token": token, "login": login}, ()=>this.load_data())
+        this.setState({"token": token, "login": login}, () => this.load_data())
     }
 
     logout() {
@@ -67,7 +68,7 @@ class App extends React.Component {
         const cookies = new Cookies()
         const token = cookies.get("token")
         const login = cookies.get("login")
-        this.setState({"token": token, "login": login}, ()=>this.load_data())
+        this.setState({"token": token, "login": login}, () => this.load_data())
     }
 
     get_headers() {
@@ -109,7 +110,7 @@ class App extends React.Component {
             )
             .catch(error => console.log(error))
 
-        axios.get(getUrl('todo'), {params:get_todo_params, headers})
+        axios.get(getUrl('todo'), {params: get_todo_params, headers})
             .then(
                 response => {
                     const todos = response.data
@@ -133,12 +134,25 @@ class App extends React.Component {
     }
 
     deleteTodo(id) {
-    const headers = this.get_headers()
-    axios.delete(getUrl(`todo/${id}`),{headers})
-        .then(response => {
-          this.setState({todos: this.state.todos.filter((item)=>item.id !== id)})
-        }).catch(error => console.log(error))
+        const headers = this.get_headers()
+        axios.delete(getUrl(`todo/${id}`), {headers})
+            .then(response => {
+                this.setState({todos: this.state.todos.filter((item) => item.id !== id)})
+            }).catch(error => console.log(error))
     }
+
+    createProject(name, repLink, workers) {
+    const headers = this.get_headers()
+    const data = {name: name, repLink: repLink, workers: workers}
+    axios.post(getUrl(`projects`), data, {headers})
+        .then(response => {
+          let new_project = response.data
+          const project = this.state.projects.filter((item) => item.id === new_project.id)[0]
+          new_project.id = project
+          this.setState({projects: [...this.state.projects, new_project]})
+        }).catch(error => console.log(error))
+  }
+
 
 
     componentDidMount() {
@@ -157,11 +171,14 @@ class App extends React.Component {
                         <Route exact path='/' component={() => <h1>Welcome to TODO</h1>}/>
                         <Route exact path='/users' component={() => <UserList users={this.state.users}/>}/>
                         <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects}
-                        deleteProject={(id)=>this.deleteProject(id)}/>}/>
+                                                                                    deleteProject={(id) => this.deleteProject(id)}/>}/>
+                        <Route exact path='/projects/create' component={() => <ProjectForm
+                            createProject={(name, repLink, workers) => this.createProject(name, repLink, workers)}
+                            users={this.state.users}/>}/>
                         <Route exact path='/projects/:id'
                                component={() => <ProjectDetail projects={this.state.projects}/>}/>
                         <Route exact path='/todo' component={() => <TodoList
-                            todos={this.state.todos} deleteTodo={(id)=>this.deleteTodo(id)}/>}/>
+                            todos={this.state.todos} deleteTodo={(id) => this.deleteTodo(id)}/>}/>
                         <Route exact path='/login' component={() => <LoginForm
                             get_token={(username, password) => this.get_token(username, password)}/>}/>
                         <Route component={NotFound404}/>

@@ -4,23 +4,26 @@ import {Link} from "react-router-dom";
 const ProjectItem = ({project, deleteProject}) => {
     return (
         <tbody>
-            <tr>
-                <td>
-                    <Link to={`/projects/${project.id}`}>{project.name}</Link>
-                </td>
-                <td>
-                    {project.repLink}
-                </td>
-                <td><button onClick={()=>deleteProject(project.id)} type='button'>Delete</button></td>
-            </tr>
+        <tr>
+            <td>
+                <Link to={`/projects/${project.id}`}>{project.name}</Link>
+            </td>
+            <td>
+                {project.repLink}
+            </td>
+            <td>
+                <button onClick={() => deleteProject(project.id)} type='button'>Delete</button>
+            </td>
+        </tr>
         </tbody>
     )
 }
 
 const ProjectList = ({projects, deleteProject}) => {
     return (
-        <table border={"1px"} cellPadding={"5px"} cellSpacing={"0"}>
-            <thead>
+        <div>
+            <table border={"1px"} cellPadding={"5px"} cellSpacing={"0"}>
+                <thead>
                 <tr>
                     <th>
                         Name
@@ -30,9 +33,11 @@ const ProjectList = ({projects, deleteProject}) => {
                     </th>
                     <th></th>
                 </tr>
-            </thead>
-            {projects.map((project) => <ProjectItem project={project} deleteProject={deleteProject}/>)}
-        </table>
+                </thead>
+                {projects.map((project) => <ProjectItem project={project} deleteProject={deleteProject}/>)}
+            </table>
+            <Link to='/projects/create'>Create</Link>
+        </div>
 
     )
 }
