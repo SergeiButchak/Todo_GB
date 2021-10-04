@@ -14,3 +14,4 @@ mixer==7.1.2
 PyJWT==2.1.0
 PyYAML==5.4.1
 uritemplate==3.0.1
+psycopg2==2.8.6
